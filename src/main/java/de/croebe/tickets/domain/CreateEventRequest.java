@@ -1,7 +1,6 @@
 package de.croebe.tickets.domain;
 
 import de.croebe.tickets.domain.entities.EventStatus;
-import de.croebe.tickets.domain.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +20,5 @@ public class CreateEventRequest {
     private LocalDateTime salesStart;
     private LocalDateTime salesEnd;
     private EventStatus status;
-    private User organizer;
     private List<CreateTicketTypeRequest> ticketTypes = new ArrayList<>();
 }
