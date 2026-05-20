@@ -1,4 +1,4 @@
-package de.croebe.tickets.domain;
+package de.croebe.tickets.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;

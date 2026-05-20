@@ -1,6 +1,6 @@
 package de.croebe.tickets.repositories;
 
-import de.croebe.tickets.domain.User;
+import de.croebe.tickets.domain.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
