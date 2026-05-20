@@ -1,4 +1,4 @@
-package de.croebe.eventtickets;
+package de.croebe.tickets;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
