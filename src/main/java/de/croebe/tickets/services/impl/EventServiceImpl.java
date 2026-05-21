@@ -103,9 +103,9 @@ public class EventServiceImpl implements EventService {
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
 
-        existingEvent.getTicketTypes().removeIf(ticketType -> {
-            return !ticketTypeIds.contains(ticketType.getId());
-        });
+        existingEvent
+                .getTicketTypes()
+                .removeIf(ticketType -> !ticketTypeIds.contains(ticketType.getId()));
 
         Map<UUID, TicketType> existingTicketTypeIndex = existingEvent
                 .getTicketTypes()
