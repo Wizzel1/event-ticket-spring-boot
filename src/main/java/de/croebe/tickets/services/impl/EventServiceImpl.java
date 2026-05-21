@@ -28,16 +28,17 @@ public class EventServiceImpl implements EventService {
             return new UserNotFoundException(message);
         });
 
+        Event eventToCreate = new Event();
         List<TicketType> ticketTypes = request.getTicketTypes().stream().map(ticketRequest -> {
             TicketType ticketTypeToCreate = new TicketType();
             ticketTypeToCreate.setName(ticketRequest.getName());
             ticketTypeToCreate.setPrice(ticketRequest.getPrice());
             ticketTypeToCreate.setDescription(ticketRequest.getDescription());
             ticketTypeToCreate.setTotalAvailable(ticketRequest.getTotalAvailable());
+            ticketTypeToCreate.setEvent(eventToCreate);
             return ticketTypeToCreate;
         }).toList();
 
-        Event eventToCreate = new Event();
         eventToCreate.setName(request.getName());
         eventToCreate.setStart(request.getStart());
         eventToCreate.setEnd(request.getEnd());
@@ -47,7 +48,6 @@ public class EventServiceImpl implements EventService {
         eventToCreate.setStatus(request.getStatus());
         eventToCreate.setOrganizer(organizer);
         eventToCreate.setTicketTypes(ticketTypes);
-
         return eventRepository.save(eventToCreate);
     }
 }
