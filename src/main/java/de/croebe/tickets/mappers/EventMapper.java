@@ -2,10 +2,9 @@ package de.croebe.tickets.mappers;
 
 import de.croebe.tickets.domain.CreateEventRequest;
 import de.croebe.tickets.domain.CreateTicketTypeRequest;
-import de.croebe.tickets.domain.dtos.CreateEventRequestDto;
-import de.croebe.tickets.domain.dtos.CreateEventResponseDto;
-import de.croebe.tickets.domain.dtos.CreateTicketTypeRequestDto;
+import de.croebe.tickets.domain.dtos.*;
 import de.croebe.tickets.domain.entities.Event;
+import de.croebe.tickets.domain.entities.TicketType;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -16,4 +15,8 @@ public interface EventMapper {
     CreateEventRequest fromDto(CreateEventRequestDto dto);
 
     CreateEventResponseDto toDto(Event event);
+
+    ListEventsTicketTypeResponseDto toDto(TicketType ticketType);
+
+    ListEventResponseDto toListEventresponseDto(Event event);
 }
