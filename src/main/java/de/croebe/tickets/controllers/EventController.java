@@ -3,6 +3,7 @@ package de.croebe.tickets.controllers;
 import de.croebe.tickets.domain.CreateEventRequest;
 import de.croebe.tickets.domain.dtos.CreateEventRequestDto;
 import de.croebe.tickets.domain.dtos.CreateEventResponseDto;
+import de.croebe.tickets.domain.dtos.GetEventDetailsResponseDto;
 import de.croebe.tickets.domain.dtos.ListEventResponseDto;
 import de.croebe.tickets.domain.entities.Event;
 import de.croebe.tickets.mappers.EventMapper;
@@ -47,6 +48,19 @@ public class EventController {
         UUID userId = this.parseUserId(jwt);
         Page<Event> events = eventService.listEventsForOrganizer(userId, pageable);
         return ResponseEntity.ok(events.map(eventMapper::toListEventresponseDto));
+    }
+
+    @GetMapping("/{eventId}")
+    public ResponseEntity<GetEventDetailsResponseDto> getEventDetails(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable UUID eventId
+    ) {
+        UUID userId = this.parseUserId(jwt);
+        return eventService
+                .getEventForOrganizer(userId, eventId)
+                .map(eventMapper::toGetEventDetailsResponseDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     private UUID parseUserId(Jwt jwt) {
