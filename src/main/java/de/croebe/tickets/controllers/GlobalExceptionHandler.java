@@ -1,6 +1,9 @@
 package de.croebe.tickets.controllers;
 
 import de.croebe.tickets.domain.dtos.ErrorDto;
+import de.croebe.tickets.exceptions.EventNotFoundException;
+import de.croebe.tickets.exceptions.EventUpdateException;
+import de.croebe.tickets.exceptions.TicketTypeNotFoundException;
 import de.croebe.tickets.exceptions.UserNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +20,37 @@ import java.util.List;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(EventUpdateException.class)
+    public ResponseEntity<ErrorDto> handleEventUpdateException(
+            EventUpdateException ex
+    ) {
+        log.error("Caught EventUpdateException:", ex);
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setMessage("Unable to update event");
+        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(TicketTypeNotFoundException.class)
+    public ResponseEntity<ErrorDto> handleTicketTypeNotFoundException(
+            TicketTypeNotFoundException ex
+    ) {
+        log.error("Caught TicketTypeNotFoundException:", ex);
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setMessage("Ticket type not found");
+        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EventNotFoundException.class)
+    public ResponseEntity<ErrorDto> handleEventNotFoundException(
+            EventNotFoundException ex
+    ) {
+        log.error("Caught EventNotFoundException:", ex);
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setMessage("Event not found");
+        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
+
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ErrorDto> handleUserNotFoundException(

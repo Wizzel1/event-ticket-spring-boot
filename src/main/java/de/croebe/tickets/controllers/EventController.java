@@ -1,10 +1,8 @@
 package de.croebe.tickets.controllers;
 
 import de.croebe.tickets.domain.CreateEventRequest;
-import de.croebe.tickets.domain.dtos.CreateEventRequestDto;
-import de.croebe.tickets.domain.dtos.CreateEventResponseDto;
-import de.croebe.tickets.domain.dtos.GetEventDetailsResponseDto;
-import de.croebe.tickets.domain.dtos.ListEventResponseDto;
+import de.croebe.tickets.domain.UpdateEventRequest;
+import de.croebe.tickets.domain.dtos.*;
 import de.croebe.tickets.domain.entities.Event;
 import de.croebe.tickets.mappers.EventMapper;
 import de.croebe.tickets.services.EventService;
@@ -40,6 +38,19 @@ public class EventController {
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
+    @PutMapping(path = "/{eventId}")
+    public ResponseEntity<UpdateEventResponseDto> updateEvent(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable UUID eventId,
+            @Valid @RequestBody UpdateEventRequestDto updateEventRequestDto
+    ) {
+        UpdateEventRequest request = eventMapper.fromDto(updateEventRequestDto);
+        UUID userId = this.parseUserId(jwt);
+        Event updatedEvent = eventService.updateEventForOrganizer(userId, eventId, request);
+        UpdateEventResponseDto responseDto = eventMapper.toUpdateEventResponseDto(updatedEvent);
+        return ResponseEntity.ok(responseDto);
+    }
+
     @GetMapping
     public ResponseEntity<Page<ListEventResponseDto>> getEvents(
             @AuthenticationPrincipal Jwt jwt,
@@ -47,7 +58,7 @@ public class EventController {
     ) {
         UUID userId = this.parseUserId(jwt);
         Page<Event> events = eventService.listEventsForOrganizer(userId, pageable);
-        return ResponseEntity.ok(events.map(eventMapper::toListEventresponseDto));
+        return ResponseEntity.ok(events.map(eventMapper::toListEventResponseDto));
     }
 
     @GetMapping("/{eventId}")
