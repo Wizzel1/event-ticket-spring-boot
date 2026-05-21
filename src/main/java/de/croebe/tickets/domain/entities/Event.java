@@ -1,4 +1,4 @@
-package de.croebe.tickets.domain;
+package de.croebe.tickets.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -28,10 +28,10 @@ public class Event {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "start")
+    @Column(name = "event_start")
     private LocalDateTime start;
 
-    @Column(name = "end")
+    @Column(name = "event_end")
     private LocalDateTime end;
 
     @Column(name = "venue", nullable = false)

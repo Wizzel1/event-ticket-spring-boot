@@ -1,6 +1,6 @@
 package de.croebe.tickets.filters;
 
-import de.croebe.tickets.domain.User;
+import de.croebe.tickets.domain.entities.User;
 import de.croebe.tickets.repositories.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

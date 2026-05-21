@@ -1,0 +1,10 @@
+package de.croebe.tickets.services;
+
+import de.croebe.tickets.domain.CreateEventRequest;
+import de.croebe.tickets.domain.entities.Event;
+
+import java.util.UUID;
+
+public interface EventService {
+    Event createEvent(UUID organizerId, CreateEventRequest request);
+}
