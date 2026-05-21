@@ -10,5 +10,5 @@ import java.util.UUID;
 public interface EventService {
     Event createEvent(UUID organizerId, CreateEventRequest request);
 
-    Page<Event> getEventsByOrganizer(UUID organizerId, Pageable pageable);
+    Page<Event> listEventsForOrganizer(UUID organizerId, Pageable pageable);
 }
