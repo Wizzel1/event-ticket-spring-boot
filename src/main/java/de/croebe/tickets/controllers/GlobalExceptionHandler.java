@@ -17,6 +17,25 @@ import java.util.List;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+    @ExceptionHandler(TicketsSoldOutException.class)
+    public ResponseEntity<ErrorDto> handleTicketSoldOutException(
+            TicketsSoldOutException ex
+    ) {
+        log.error("Caught TicketSoldOutException:", ex);
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setMessage("Tickets are sold out for this ticket type");
+        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(QrCodeNotFoundException.class)
+    public ResponseEntity<ErrorDto> handleQrCodeNotFoundException(
+            QrCodeNotFoundException ex
+    ) {
+        log.error("Caught QrCodeNotFoundException:", ex);
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setMessage("QR code not found");
+        return new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
     @ExceptionHandler(QrCodeGenerationException.class)
     public ResponseEntity<ErrorDto> handleQrCodeGenerationException(
@@ -25,7 +44,7 @@ public class GlobalExceptionHandler {
         log.error("Caught QrCodeGenerationException:", ex);
         ErrorDto errorDto = new ErrorDto();
         errorDto.setMessage("Unable to generate QR code");
-        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(EventUpdateException.class)
