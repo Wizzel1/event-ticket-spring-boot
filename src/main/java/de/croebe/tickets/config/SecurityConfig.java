@@ -22,7 +22,7 @@ public class SecurityConfig {
     ) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET, "/api/v1/published-events").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/published-events/**").permitAll()
                         .anyRequest().authenticated())
                 .csrf(CsrfConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
