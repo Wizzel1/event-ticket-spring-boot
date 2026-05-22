@@ -4,6 +4,7 @@ import de.croebe.tickets.domain.CreateEventRequest;
 import de.croebe.tickets.domain.UpdateEventRequest;
 import de.croebe.tickets.domain.UpdateTicketTypeRequest;
 import de.croebe.tickets.domain.entities.Event;
+import de.croebe.tickets.domain.entities.EventStatus;
 import de.croebe.tickets.domain.entities.TicketType;
 import de.croebe.tickets.domain.entities.User;
 import de.croebe.tickets.exceptions.EventNotFoundException;
@@ -144,5 +145,10 @@ public class EventServiceImpl implements EventService {
     @Transactional
     public void deleteEventForOrganizer(UUID organizerId, UUID eventId) {
         getEventForOrganizer(organizerId, eventId).ifPresent(eventRepository::delete);
+    }
+
+    @Override
+    public Page<Event> listPublishedEvents(Pageable pageable) {
+        return eventRepository.findByStatus(EventStatus.PUBLISHED, pageable);
     }
 }

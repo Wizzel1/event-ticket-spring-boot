@@ -1,6 +1,7 @@
 package de.croebe.tickets.repositories;
 
 import de.croebe.tickets.domain.entities.Event;
+import de.croebe.tickets.domain.entities.EventStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +15,6 @@ public interface EventRepository extends JpaRepository<Event, UUID> {
     Page<Event> findByOrganizerId(UUID organizerId, Pageable pageable);
 
     Optional<Event> findByIdAndOrganizerId(UUID eventId, UUID organizerId);
+
+    Page<Event> findByStatus(EventStatus status, Pageable pageable);
 }
