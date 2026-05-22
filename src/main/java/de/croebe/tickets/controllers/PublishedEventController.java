@@ -1,5 +1,6 @@
 package de.croebe.tickets.controllers;
 
+import de.croebe.tickets.domain.dtos.GetPublishedEventDetailsResponseDto;
 import de.croebe.tickets.domain.dtos.ListPublishedEventsResponseDto;
 import de.croebe.tickets.domain.entities.Event;
 import de.croebe.tickets.mappers.EventMapper;
@@ -9,8 +10,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
 
 
 @RestController
@@ -35,5 +39,15 @@ public class PublishedEventController {
         return ResponseEntity.ok(events.map(eventMapper::toListPublishedEventsResponseDto));
     }
 
+    @GetMapping(path = "/{eventId}")
+    public ResponseEntity<GetPublishedEventDetailsResponseDto> getPublishedEventDetails(
+            @PathVariable UUID eventId
+    ) {
+        return eventService
+                .getPublishedEventById(eventId)
+                .map(eventMapper::toGetPublishedEventDetailsResponseDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 
 }
