@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 public class EventServiceImpl implements EventService {
 
     private final UserRepository userRepository;
-
     private final EventRepository eventRepository;
 
     @Override
@@ -151,10 +150,5 @@ public class EventServiceImpl implements EventService {
     @Override
     public Page<Event> listPublishedEvents(Pageable pageable) {
         return eventRepository.findByStatus(EventStatus.PUBLISHED, pageable);
-    }
-
-    @Override
-    public Page<Event> searchPublishedEvents(String query, Pageable pageable) {
-        return eventRepository.searchEvents(query, pageable);
     }
 }
