@@ -1,6 +1,6 @@
 package de.croebe.tickets.config;
 
-import org.jspecify.annotations.NonNull;
+import lombok.NonNull;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
