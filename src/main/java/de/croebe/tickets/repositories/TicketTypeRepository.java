@@ -1,6 +1,5 @@
 package de.croebe.tickets.repositories;
 
-import de.croebe.tickets.domain.entities.Ticket;
 import de.croebe.tickets.domain.entities.TicketType;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
