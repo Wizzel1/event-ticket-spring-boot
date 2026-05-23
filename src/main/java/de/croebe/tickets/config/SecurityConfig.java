@@ -18,7 +18,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(
             HttpSecurity http,
-            UserProvisioningFilter provisioningFilter
+            UserProvisioningFilter provisioningFilter,
+            JwtAuthenticationConverter jwtAuthConverter
     ) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
@@ -26,7 +27,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .csrf(CsrfConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .oauth2ResourceServer(oauth -> oauth.jwt(Customizer.withDefaults()))
+                .oauth2ResourceServer(oauth -> oauth.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthConverter)))
                 .addFilterAfter(provisioningFilter, BearerTokenAuthenticationFilter.class);
 
 
