@@ -1,10 +1,7 @@
 package de.croebe.tickets.controllers;
 
 import de.croebe.tickets.domain.dtos.ErrorDto;
-import de.croebe.tickets.exceptions.EventNotFoundException;
-import de.croebe.tickets.exceptions.EventUpdateException;
-import de.croebe.tickets.exceptions.TicketTypeNotFoundException;
-import de.croebe.tickets.exceptions.UserNotFoundException;
+import de.croebe.tickets.exceptions.*;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,6 +17,35 @@ import java.util.List;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+    @ExceptionHandler(TicketsSoldOutException.class)
+    public ResponseEntity<ErrorDto> handleTicketSoldOutException(
+            TicketsSoldOutException ex
+    ) {
+        log.error("Caught TicketSoldOutException:", ex);
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setMessage("Tickets are sold out for this ticket type");
+        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(QrCodeNotFoundException.class)
+    public ResponseEntity<ErrorDto> handleQrCodeNotFoundException(
+            QrCodeNotFoundException ex
+    ) {
+        log.error("Caught QrCodeNotFoundException:", ex);
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setMessage("QR code not found");
+        return new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(QrCodeGenerationException.class)
+    public ResponseEntity<ErrorDto> handleQrCodeGenerationException(
+            QrCodeGenerationException ex
+    ) {
+        log.error("Caught QrCodeGenerationException:", ex);
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setMessage("Unable to generate QR code");
+        return new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
     @ExceptionHandler(EventUpdateException.class)
     public ResponseEntity<ErrorDto> handleEventUpdateException(
