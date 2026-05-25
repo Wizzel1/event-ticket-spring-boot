@@ -1,7 +1,6 @@
 package de.croebe.tickets.domain.dtos;
 
 
-import de.croebe.tickets.domain.CreateTicketTypeRequest;
 import de.croebe.tickets.domain.entities.EventStatus;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;

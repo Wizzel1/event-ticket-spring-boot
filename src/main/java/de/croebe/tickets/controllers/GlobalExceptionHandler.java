@@ -22,8 +22,7 @@ public class GlobalExceptionHandler {
             TicketNotFoundException ex
     ) {
         log.error("Caught TicketNotFoundException:", ex);
-        ErrorDto errorDto = new ErrorDto();
-        errorDto.setMessage("Ticket type not found");
+        ErrorDto errorDto = new ErrorDto("Ticket type not found");
         return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
     }
 
@@ -32,8 +31,7 @@ public class GlobalExceptionHandler {
             TicketsSoldOutException ex
     ) {
         log.error("Caught TicketSoldOutException:", ex);
-        ErrorDto errorDto = new ErrorDto();
-        errorDto.setMessage("Tickets are sold out for this ticket type");
+        ErrorDto errorDto = new ErrorDto("Tickets are sold out for this ticket type");
         return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
     }
 
@@ -42,8 +40,7 @@ public class GlobalExceptionHandler {
             QrCodeNotFoundException ex
     ) {
         log.error("Caught QrCodeNotFoundException:", ex);
-        ErrorDto errorDto = new ErrorDto();
-        errorDto.setMessage("QR code not found");
+        ErrorDto errorDto = new ErrorDto("QR code not found");
         return new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -52,8 +49,7 @@ public class GlobalExceptionHandler {
             QrCodeGenerationException ex
     ) {
         log.error("Caught QrCodeGenerationException:", ex);
-        ErrorDto errorDto = new ErrorDto();
-        errorDto.setMessage("Unable to generate QR code");
+        ErrorDto errorDto = new ErrorDto("Unable to generate QR code");
         return new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -62,8 +58,7 @@ public class GlobalExceptionHandler {
             EventUpdateException ex
     ) {
         log.error("Caught EventUpdateException:", ex);
-        ErrorDto errorDto = new ErrorDto();
-        errorDto.setMessage("Unable to update event");
+        ErrorDto errorDto = new ErrorDto("Unable to update event");
         return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
     }
 
@@ -72,8 +67,7 @@ public class GlobalExceptionHandler {
             TicketTypeNotFoundException ex
     ) {
         log.error("Caught TicketTypeNotFoundException:", ex);
-        ErrorDto errorDto = new ErrorDto();
-        errorDto.setMessage("Ticket type not found");
+        ErrorDto errorDto = new ErrorDto("Ticket type not found");
         return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
     }
 
@@ -82,8 +76,7 @@ public class GlobalExceptionHandler {
             EventNotFoundException ex
     ) {
         log.error("Caught EventNotFoundException:", ex);
-        ErrorDto errorDto = new ErrorDto();
-        errorDto.setMessage("Event not found");
+        ErrorDto errorDto = new ErrorDto("Event not found");
         return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
     }
 
@@ -93,8 +86,7 @@ public class GlobalExceptionHandler {
             UserNotFoundException ex
     ) {
         log.error("Caught UserNotFoundException:", ex);
-        ErrorDto errorDto = new ErrorDto();
-        errorDto.setMessage("User not found");
+        ErrorDto errorDto = new ErrorDto("User not found");
         return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
     }
 
@@ -103,7 +95,6 @@ public class GlobalExceptionHandler {
             MethodArgumentNotValidException ex
     ) {
         log.error("Caught MethodArgumentNotValidException:", ex);
-        ErrorDto errorDto = new ErrorDto();
         BindingResult result = ex.getBindingResult();
         List<FieldError> fieldErrors = result.getFieldErrors();
         String error = fieldErrors
@@ -111,7 +102,7 @@ public class GlobalExceptionHandler {
                 .findFirst()
                 .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
                 .orElse("Validation error occured");
-        errorDto.setMessage(error);
+        ErrorDto errorDto = new ErrorDto(error);
         return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
     }
 
@@ -120,22 +111,20 @@ public class GlobalExceptionHandler {
             ConstraintViolationException ex
     ) {
         log.error("Constraint violation occurred:", ex);
-        ErrorDto errorDto = new ErrorDto();
         String errorMessage = ex
                 .getConstraintViolations()
                 .stream()
                 .findFirst()
                 .map(v -> v.getPropertyPath() + ": " + v.getMessage())
                 .orElse("A constraint violation occurred");
-        errorDto.setMessage(errorMessage);
+        ErrorDto errorDto = new ErrorDto(errorMessage);
         return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorDto> handleException(Exception ex) {
         log.error("Global exception handler caught:", ex);
-        ErrorDto errorDto = new ErrorDto();
-        errorDto.setMessage("An unknown error occurred");
+        ErrorDto errorDto = new ErrorDto("An unknown error occurred");
         return new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

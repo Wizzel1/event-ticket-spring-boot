@@ -1,22 +1,15 @@
 package de.croebe.tickets.domain.dtos;
 
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class GetEventDetailsTicketTypeResponseDto {
-    private UUID id;
-    private String name;
-    private Double price;
-    private String description;
-    private Integer totalAvailable;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+public record GetEventDetailsTicketTypeResponseDto(
+        UUID id,
+        String name,
+        Double price,
+        String description,
+        Integer totalAvailable,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt
+) {
 }

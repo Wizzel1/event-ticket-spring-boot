@@ -1,18 +1,11 @@
 package de.croebe.tickets.domain.dtos;
 
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.UUID;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class GetPublishedEventDetailsTicketTypeResponseDto {
-    private UUID id;
-    private String name;
-    private Double price;
-    private String description;
+public record GetPublishedEventDetailsTicketTypeResponseDto(
+        UUID id,
+        String name,
+        Double price,
+        String description
+) {
 }
