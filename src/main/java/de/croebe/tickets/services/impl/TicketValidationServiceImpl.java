@@ -23,11 +23,14 @@ public class TicketValidationServiceImpl implements TicketValidationService {
     private final TicketValidationRepository validationRepository;
     private final TicketRepository ticketRepository;
 
-    private @NonNull TicketValidation validateTicket(Ticket ticket) {
+    private @NonNull TicketValidation validateTicket(
+            Ticket ticket,
+            TicketValidationMethod validationMethod
+    ) {
         TicketValidation validation = TicketValidation
                 .builder()
                 .ticket(ticket)
-                .validationMethod(TicketValidationMethod.QR_CODE)
+                .validationMethod(validationMethod)
                 .build();
 
         TicketValidationStatus ticketValidationStatus = ticket
@@ -53,7 +56,7 @@ public class TicketValidationServiceImpl implements TicketValidationService {
                 });
 
         Ticket ticket = qrCode.getTicket();
-        return validateTicket(ticket);
+        return validateTicket(ticket, TicketValidationMethod.QR_CODE);
     }
 
 
@@ -66,6 +69,6 @@ public class TicketValidationServiceImpl implements TicketValidationService {
                     String message = String.format("Ticket with ID %s not found", ticketId);
                     return new TicketNotFoundException(message);
                 });
-        return validateTicket(ticket);
+        return validateTicket(ticket, TicketValidationMethod.MANUAL);
     }
 }
