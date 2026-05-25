@@ -38,7 +38,7 @@ public class TicketValidationServiceImpl implements TicketValidationService {
                 .stream()
                 .filter(v -> TicketValidationStatus.VALID.equals(v.getStatus()))
                 .findFirst()
-                .map(v -> TicketValidationStatus.INVALID)
+                .map(_ -> TicketValidationStatus.INVALID)
                 .orElse(TicketValidationStatus.VALID);
 
         validation.setStatus(ticketValidationStatus);

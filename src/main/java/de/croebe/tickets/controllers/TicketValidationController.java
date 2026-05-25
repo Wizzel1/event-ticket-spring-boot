@@ -3,7 +3,6 @@ package de.croebe.tickets.controllers;
 import de.croebe.tickets.domain.dtos.TicketValidationRequestDto;
 import de.croebe.tickets.domain.dtos.TicketValidationResponseDto;
 import de.croebe.tickets.domain.entities.TicketValidation;
-import de.croebe.tickets.domain.entities.TicketValidationMethod;
 import de.croebe.tickets.mappers.TicketValidationMapper;
 import de.croebe.tickets.services.TicketValidationService;
 import lombok.RequiredArgsConstructor;
